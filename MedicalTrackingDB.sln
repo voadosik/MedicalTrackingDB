@@ -1,0 +1,21 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# SQL Server Management Studio Version 21
+VisualStudioVersion = 17.14.36127.28 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{4F2E2C19-372F-40D8-9FA7-9D2138C6997A}") = "MedicalTrackingDB", "MedicalTrackingDB\MedicalTrackingDB.ssmssqlproj", "{C8949FF7-DA8F-D497-CADC-65EFC1DCBC71}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Default|Default = Default|Default
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C8949FF7-DA8F-D497-CADC-65EFC1DCBC71}.Default|Default.ActiveCfg = Default
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F43C500B-0F12-4B1C-BF53-0E5B00E75316}
+	EndGlobalSection
+EndGlobal
