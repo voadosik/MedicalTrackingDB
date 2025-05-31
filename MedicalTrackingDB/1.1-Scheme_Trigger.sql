@@ -7,7 +7,6 @@ AS
 BEGIN
     SET NOCOUNT ON;
     BEGIN TRY
-        -- Update IsConfirmed based on symptom presence
         UPDATE d
         SET IsConfirmed = CASE 
                 WHEN EXISTS (
@@ -61,7 +60,7 @@ BEGIN
         END
         ELSE
         BEGIN
-            UPDATE TreatmentPlans
+            UPDATE tp with (ROWLOCK)
             SET LastUpdated = SYSDATETIME()
             FROM TreatmentPlans tp
             INNER JOIN inserted i ON tp.TreatmentPlanID = i.TreatmentPlanID;

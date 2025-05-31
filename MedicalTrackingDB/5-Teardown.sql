@@ -1,4 +1,3 @@
-
 USE MedicalTrackingDB;
 GO
 

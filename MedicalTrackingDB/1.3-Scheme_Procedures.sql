@@ -42,7 +42,7 @@ BEGIN
     BEGIN TRY
         BEGIN TRANSACTION;
 
-        UPDATE Patients
+        UPDATE Patients with (ROWLOCK)
         SET
             FirstName = ISNULL(@FirstName, FirstName),
             LastName = ISNULL(@LastName, LastName),
@@ -152,12 +152,13 @@ BEGIN
     BEGIN TRY
         BEGIN TRANSACTION;
 
-        UPDATE TreatmentPlans
+        UPDATE tp WITH (ROWLOCK, UPDLOCK)
         SET 
             Status = ISNULL(@Status, Status),
             Dosage = ISNULL(@Dosage, Dosage),
             Frequency = ISNULL(@Frequency, Frequency)
-        WHERE TreatmentPlanID = @TreatmentPlanID;
+        FROM TreatmentPlans tp
+        WHERE tp.TreatmentPlanID = @TreatmentPlanID;
 
         COMMIT TRANSACTION;
     END TRY
@@ -176,10 +177,11 @@ BEGIN
     BEGIN TRY
         BEGIN TRANSACTION;
         
-        UPDATE Diagnoses
+        UPDATE d with (ROWLOCK)
         SET IsConfirmed = 1
-        WHERE DiagnosisID = @DiagnosisID
-        AND DoctorID = @DoctorID
+        FROM Diagnoses d
+        WHERE d.DiagnosisID = @DiagnosisID
+        AND d.DoctorID = @DoctorID
 
         COMMIT TRANSACTION;
     END TRY
