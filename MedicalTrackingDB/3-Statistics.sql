@@ -1,6 +1,6 @@
-
 USE MedicalTrackingDB;
 GO
+
 
 -- Create statistics for all tables
 UPDATE STATISTICS Patients;
@@ -17,4 +17,7 @@ UPDATE STATISTICS DiseaseSymptoms;
 CREATE STATISTICS STAT_Patients_Name ON Patients(FirstName, LastName) WITH FULLSCAN;
 CREATE STATISTICS STAT_Symptoms_Name ON Symptoms(SymptomName) WITH FULLSCAN;
 CREATE STATISTICS STAT_Diseases_Name ON Diseases(DiseaseName) WITH FULLSCAN;
+CREATE STATISTICS STAT_Doctors_Specialty ON Doctors(Specialty) WITH FULLSCAN;
+CREATE STATISTICS STAT_Treatments_Type ON Treatments(TreatmentType) WITH FULLSCAN;
+
 GO

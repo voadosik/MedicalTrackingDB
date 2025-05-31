@@ -3,70 +3,38 @@ USE MedicalTrackingDB;
 GO
 
 -- Drop views
-IF EXISTS (SELECT * FROM sys.views WHERE name = 'vActivePatientTreatments')
-    DROP VIEW vActivePatientTreatments;
-    
-IF EXISTS (SELECT * FROM sys.views WHERE name = 'vPatientSymptomSummary')
-    DROP VIEW vPatientSymptomSummary;
-    
-IF EXISTS (SELECT * FROM sys.views WHERE name = 'vDiseaseSymptomRelationships')
-    DROP VIEW vDiseaseSymptomRelationships;
-    
-IF EXISTS (SELECT * FROM sys.views WHERE name = 'vTreatmentEffectiveness')
-    DROP VIEW vTreatmentEffectiveness;
-
-IF EXISTS (SELECT * FROM sys.views WHERE name = 'vSymptomPrevalence')
-    DROP VIEW vSymptomPrevalence;
+DROP VIEW IF EXISTS vActivePatientTreatments;
+DROP VIEW IF EXISTS vPatientSymptomSummary;
+DROP VIEW IF EXISTS vDiseaseSymptomRelationships;
+DROP VIEW IF EXISTS vTreatmentEffectiveness;
+DROP VIEW IF EXISTS vSymptomPrevalence;
+DROP VIEW IF EXISTS vUnconfirmedDiagnoses;
     
 -- Drop procedures
-IF EXISTS (SELECT * FROM sys.procedures WHERE name = 'RegisterPatient')
-    DROP PROCEDURE RegisterPatient;
-    
-IF EXISTS (SELECT * FROM sys.procedures WHERE name = 'AddPatientSymptom')
-    DROP PROCEDURE AddPatientSymptom;
-    
-IF EXISTS (SELECT * FROM sys.procedures WHERE name = 'CreateDiagnosis')
-    DROP PROCEDURE CreateDiagnosis;
-    
-IF EXISTS (SELECT * FROM sys.procedures WHERE name = 'PrescribeTreatment')
-    DROP PROCEDURE PrescribeTreatment;
+DROP PROCEDURE IF EXISTS RegisterPatient;
+DROP PROCEDURE IF EXISTS UpdatePatient;
+DROP PROCEDURE IF EXISTS AddPatientSymptom;
+DROP PROCEDURE IF EXISTS CreateDiagnosis;
+DROP PROCEDURE IF EXISTS PrescribeTreatment;
+DROP PROCEDURE IF EXISTS UpdateTreatmentPlan;
+DROP PROCEDURE IF EXISTS ConfirmDiagnosis;
 
-IF EXISTS (SELECT * FROM sys.procedures WHERE name = 'UpdatePatient')
-    DROP PROCEDURE UpdatePatient;
-
-IF EXISTS (SELECT * FROM sys.procedures WHERE name = 'UpdateTreatmentPlan')
-    DROP PROCEDURE UpdateTreatmentPlan;
+-- Drop triggers
+DROP TRIGGER IF EXISTS TR_Diagnoses_SymptomCheck;
+DROP TRIGGER IF EXISTS TR_TreatmentPlans_Concurrency;
 
 
 -- Drop tables (in reverse order of creation due to FK constraints)
-IF EXISTS (SELECT * FROM sys.tables WHERE name = 'TreatmentPlans')
-    DROP TABLE TreatmentPlans;
-    
-IF EXISTS (SELECT * FROM sys.tables WHERE name = 'PatientSymptoms')
-    DROP TABLE PatientSymptoms;
-    
-IF EXISTS (SELECT * FROM sys.tables WHERE name = 'DiseaseSymptoms')
-    DROP TABLE DiseaseSymptoms;
-    
-IF EXISTS (SELECT * FROM sys.tables WHERE name = 'Diagnoses')
-    DROP TABLE Diagnoses;
-    
-IF EXISTS (SELECT * FROM sys.tables WHERE name = 'Treatments')
-    DROP TABLE Treatments;
-    
-IF EXISTS (SELECT * FROM sys.tables WHERE name = 'Doctors')
-    DROP TABLE Doctors;
-    
-IF EXISTS (SELECT * FROM sys.tables WHERE name = 'Diseases')
-    DROP TABLE Diseases;
-    
-IF EXISTS (SELECT * FROM sys.tables WHERE name = 'Symptoms')
-    DROP TABLE Symptoms;
-    
-IF EXISTS (SELECT * FROM sys.tables WHERE name = 'Patients')
-    DROP TABLE Patients;
+DROP TABLE IF EXISTS TreatmentPlans;
+DROP TABLE IF EXISTS PatientSymptoms;
+DROP TABLE IF EXISTS DiseaseSymptoms;
+DROP TABLE IF EXISTS Diagnoses;
+DROP TABLE IF EXISTS Treatments;
+DROP TABLE IF EXISTS Doctors;
+DROP TABLE IF EXISTS Diseases;
+DROP TABLE IF EXISTS Symptoms;
+DROP TABLE IF EXISTS Patients;
+DROP TABLE IF EXISTS AuditLog;
 
-IF EXISTS (SELECT * FROM sys.tables WHERE name = 'AuditLog')
-    DROP TABLE AuditLog;
 
 GO
