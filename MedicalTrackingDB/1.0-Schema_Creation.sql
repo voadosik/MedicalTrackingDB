@@ -8,7 +8,31 @@ Description: Creates core database structure for medical symptom and treatment t
 Overiview:
 ---------
 Database supports a medical practice in tracking patient symptoms, diagnosing diseases, prescribing treatments, 
-and monitoring treatment effectiveness. Key features:
+and monitoring treatment effectiveness. 
+
+Entities:
+
+Patients
+- Demographics: Name, DOB(Date of birth), gender, contact info
+- Age validation (0-117 years)
+
+Symptoms
+- Name, description, body system
+- Severity scale (1-10) for symptom tracking
+
+Diseases
+- Name, ICD-11 code, description
+- Unique ICD-11 codes for billing/reporting
+
+Doctors
+- Name, specialty, license number
+- License verification for treatment authority
+
+Treatments
+- Name, type (medication/therapy/surgery), instructions
+- Dosage and frequency specifications
+
+Key features:
 - Patient registration
 - Medical history of a patient
 - Symptom cayalog with severity track
@@ -24,8 +48,32 @@ System contains 9 core tables maintaining relationships between:
 - Diseases and Symptoms (DiseaseSymptoms table)
 - Diagnoses and Treatments (TreatmentPlans table)
 
+Workflow management:
+Diagnosis:
+- Symptom recording: Patient reports symptoms (onset, severity, status)
+- Creation: Doctor assesses symptoms, disease diagnosis
+- Validation: disease-symptom consistency
+- Confirmation: Doctor verifies diagnosis after review
 
+Treatment lifecycle:
+- Prescription: Doctor creates treatment plan for some diagnosis
+- Status: Pending, Active, Completed/Cancelled
+- Effectiveness: symptom cure tracking
 
+Views:
+
+Patients:
+- Active treatments View: Current plans with doctor/disease info
+- Symptom summary: All symptoms with severity/status
+
+Clinical reports:
+- Treatment effectiveness: Outcomes by disease/treatment
+- Symptom prevalence: severity across population
+- Unconfirmed diagnoses: requiring verification
+
+Administration:
+- Patient Registration
+- Medical Catalogs: symptoms/diseases/treatments CRUD
 
 */
 
@@ -77,7 +125,7 @@ BEGIN TRY
         TreatmentID INT IDENTITY(1,1) PRIMARY KEY,
         TreatmentName NVARCHAR(100) NOT NULL,
         Description NVARCHAR(MAX),
-        TreatmentType NVARCHAR(50) NOT NULL -- Medication, Therapy, Surgery, etc.
+        TreatmentType NVARCHAR(50) NOT NULL
     );
 
     -- Diagnoses table (links patients to diseases)
