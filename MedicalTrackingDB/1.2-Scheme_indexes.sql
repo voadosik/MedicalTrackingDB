@@ -22,9 +22,11 @@ CREATE INDEX IX_Diseases_Name ON Diseases(DiseaseName);
 CREATE INDEX IX_Treatments_Name ON Treatments(TreatmentName);
 CREATE INDEX IX_PatientSymptoms_Status ON PatientSymptoms(CurrentStatus);
 CREATE INDEX IX_TreatmentPlans_Status ON TreatmentPlans(Status);
+CREATE INDEX IX_TreatmentPlans_Active ON TreatmentPlans(Status) WHERE Status = 'Active';
 CREATE INDEX IX_Diagnoses_Date ON Diagnoses(DiagnosisDate);
 CREATE INDEX IX_TreatmentPlans_Dates ON TreatmentPlans(StartDate, EndDate);
 CREATE INDEX IX_AuditLog_Date ON AuditLog(AuditDate);
+
 
 CREATE INDEX IX_vActivePatientTreatments ON TreatmentPlans (Status)
 INCLUDE (DiagnosisID, TreatmentID, DoctorID, StartDate);

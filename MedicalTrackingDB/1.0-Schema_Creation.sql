@@ -14,7 +14,7 @@ Entities:
 
 Patients
 - Demographics: Name, DOB(Date of birth), gender, contact info
-- Age validation (0-117 years)
+- Age validation (0-125 years)
 
 Symptoms
 - Name, description, body system
@@ -92,7 +92,7 @@ BEGIN TRY
         Gender CHAR(1) NOT NULL CHECK (Gender IN ('M', 'F', 'O')),
         PhoneNumber VARCHAR(20),
         Email NVARCHAR(100),
-        CONSTRAINT CHK_Patient_Age CHECK (DATEDIFF(YEAR,DOB, GETDATE()) BETWEEN 0 AND 117)
+        CONSTRAINT CHK_Patient_Age CHECK (DATEDIFF(YEAR,DOB, GETDATE()) BETWEEN 0 AND 125)
     );
 
     -- Symptoms table

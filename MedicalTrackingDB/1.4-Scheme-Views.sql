@@ -56,14 +56,15 @@ SELECT
     d.DiseaseName,
     t.TreatmentName,
     AVG(di.Severity) AS AvgInitialSeverity,
-    COUNT(*) AS CasesTreated,
+    COUNT(tp.TreatmentPlanID) AS CasesTreated,
     SUM(CASE WHEN ps.CurrentStatus = 'Resolved' THEN 1 ELSE 0 END) AS ResolvedCases
 FROM Diagnoses di
 INNER JOIN Diseases d ON di.DiseaseID = d.DiseaseID
 INNER JOIN TreatmentPlans tp ON di.DiagnosisID = tp.DiagnosisID
 INNER JOIN Treatments t ON tp.TreatmentID = t.TreatmentID
-LEFT JOIN PatientSymptoms ps ON di.PatientID = ps.PatientID
-WHERE tp.Status = 'Completed'
+INNER JOIN PatientSymptoms ps ON di.PatientID = ps.PatientID
+INNER JOIN DiseaseSymptoms ds ON d.DiseaseID = ds.DiseaseID AND ps.SymptomID = ds.SymptomID
+WHERE tp.Status = 'Active'
 GROUP BY d.DiseaseName, t.TreatmentName;
 GO
 
