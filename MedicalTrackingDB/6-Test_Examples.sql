@@ -1,8 +1,3 @@
-
-
--- MEDICAL TRACKING SYSTEM TESTS
-
-
 USE MedicalTrackingDB;
 GO
 

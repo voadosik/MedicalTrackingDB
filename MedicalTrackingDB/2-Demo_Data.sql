@@ -60,10 +60,12 @@ VALUES
 
 INSERT INTO DiseaseSymptoms (DiseaseID, SymptomID, IsPrimary)
 VALUES
-(1, 1, 1), (1, 2, 1), (1, 5, 1), (1, 3, 0),
-(2, 3, 1), (2, 8, 1),
-(3, 1, 1), (3, 2, 1), (3, 6, 1),
-(4, 2, 1), (4, 6, 1), (4, 7, 0);
+(1, 1, 1), (1, 2, 1), 
+(1, 5, 1), (1, 3, 0),
+(2, 3, 1), (2, 8, 1), 
+(3, 1, 1), (3, 2, 1), 
+(3, 6, 1), (4, 2, 1), 
+(4, 6, 1), (4, 7, 0);
 
 INSERT INTO Diagnoses (PatientID, DiseaseID, DoctorID, Severity, Notes, IsConfirmed)
 VALUES

@@ -23,7 +23,7 @@ DROP TRIGGER IF EXISTS TR_Diagnoses_SymptomCheck;
 DROP TRIGGER IF EXISTS TR_TreatmentPlans_Concurrency;
 
 
--- Drop tables (in reverse order of creation due to FK constraints)
+-- Drop tables
 DROP TABLE IF EXISTS TreatmentPlans;
 DROP TABLE IF EXISTS PatientSymptoms;
 DROP TABLE IF EXISTS DiseaseSymptoms;
