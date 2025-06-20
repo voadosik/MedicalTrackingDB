@@ -176,12 +176,18 @@ AS
 BEGIN
     BEGIN TRY
         BEGIN TRANSACTION;
+
+        IF NOT EXISTS (
+            SELECT 1 
+            FROM Diagnoses 
+            WHERE DiagnosisID = @DiagnosisID 
+            AND DoctorID = @DoctorID
+        )
         
         UPDATE d with (ROWLOCK)
         SET IsConfirmed = 1
         FROM Diagnoses d
         WHERE d.DiagnosisID = @DiagnosisID
-        AND d.DoctorID = @DoctorID
 
         COMMIT TRANSACTION;
     END TRY

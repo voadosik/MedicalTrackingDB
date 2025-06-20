@@ -50,7 +50,7 @@ INNER JOIN DiseaseSymptoms ds ON d.DiseaseID = ds.DiseaseID
 INNER JOIN Symptoms s ON ds.SymptomID = s.SymptomID;
 GO
 
--- View for treatment effectiveness (requires completion data)
+-- View for treatment effectiveness
 CREATE VIEW vTreatmentEffectiveness AS
 SELECT 
     d.DiseaseName,
@@ -64,7 +64,7 @@ INNER JOIN TreatmentPlans tp ON di.DiagnosisID = tp.DiagnosisID
 INNER JOIN Treatments t ON tp.TreatmentID = t.TreatmentID
 INNER JOIN PatientSymptoms ps ON di.PatientID = ps.PatientID
 INNER JOIN DiseaseSymptoms ds ON d.DiseaseID = ds.DiseaseID AND ps.SymptomID = ds.SymptomID
-WHERE tp.Status = 'Active'
+WHERE tp.Status = 'Completed'
 GROUP BY d.DiseaseName, t.TreatmentName;
 GO
 
