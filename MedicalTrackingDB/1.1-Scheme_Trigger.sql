@@ -43,7 +43,7 @@ BEGIN
     END TRY
     BEGIN CATCH
         INSERT INTO AuditLog (TableName, Operation, RecordID, AuditMessage)
-        VALUES ('Diagnoses', 'E', 'N/A', 'Trigger error: ' + ERROR_MESSAGE());
+        VALUES ('Diagnoses', 'E', '5', 'Trigger error: ' + ERROR_MESSAGE());
     END CATCH
 END;
 GO
@@ -68,7 +68,7 @@ BEGIN
     END TRY
     BEGIN CATCH
         INSERT INTO AuditLog (TableName, Operation, RecordID, AuditMessage)
-        VALUES ('TreatmentPlans', 'E', 'N/A', 'Concurrency error: ' + ERROR_MESSAGE());
+        VALUES ('TreatmentPlans', 'E', '3', 'Concurrency error: ' + ERROR_MESSAGE());
         THROW;
     END CATCH
 END;
