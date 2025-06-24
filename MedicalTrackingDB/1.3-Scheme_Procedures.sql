@@ -146,25 +146,34 @@ CREATE PROCEDURE UpdateTreatmentPlan
     @TreatmentPlanID INT,
     @Status NVARCHAR(20) = NULL,
     @Dosage NVARCHAR(100) = NULL,
-    @Frequency NVARCHAR(100) = NULL
+    @Frequency NVARCHAR(100) = NULL,
+    @OriginalRowVersion ROWVERSION
 AS
 BEGIN
     BEGIN TRY
         BEGIN TRANSACTION;
 
-        UPDATE tp WITH (ROWLOCK, UPDLOCK)
+        UPDATE TreatmentPlans WITH (UPDLOCK, ROWLOCK)
         SET 
             Status = ISNULL(@Status, Status),
             Dosage = ISNULL(@Dosage, Dosage),
             Frequency = ISNULL(@Frequency, Frequency)
-        FROM TreatmentPlans tp
-        WHERE tp.TreatmentPlanID = @TreatmentPlanID;
-
+        WHERE TreatmentPlanID = @TreatmentPlanID
+        AND RowVersion = @OriginalRowVersion; 
+        
+        IF @@ROWCOUNT = 0
+        BEGIN
+            IF EXISTS(SELECT 1 FROM TreatmentPlans WHERE TreatmentPlanID = @TreatmentPlanID)
+                THROW 50500, 'Data was modified by another user', 1;
+            ELSE
+                THROW 50501, 'Record not found', 1;
+        END
+        
         COMMIT TRANSACTION;
     END TRY
     BEGIN CATCH
         IF @@TRANCOUNT > 0 ROLLBACK;
-        THROW 50013, 'Error updating treatment plan', 1;
+        THROW;
     END CATCH
 END;
 GO

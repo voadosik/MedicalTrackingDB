@@ -48,27 +48,35 @@ BEGIN
 END;
 GO
 
--- Concurrency control trigger for TreatmentPlans
-CREATE TRIGGER TR_TreatmentPlans_Concurrency ON TreatmentPlans AFTER UPDATE
+CREATE TRIGGER TR_TreatmentPlans_Concurrency ON TreatmentPlans
+AFTER UPDATE
 AS
 BEGIN
     SET NOCOUNT ON;
+
     BEGIN TRY
-        IF UPDATE(LastUpdated)
+        -- Detect concurrent update (LastUpdated changed by user)
+        IF EXISTS (
+            SELECT 1
+            FROM inserted i
+            JOIN deleted d ON i.TreatmentPlanID = d.TreatmentPlanID
+            WHERE i.LastUpdated <> d.LastUpdated
+        )
         BEGIN
-            RAISERROR('Concurrency conflict detected', 16, 1);
+            RAISERROR('Concurrency error', 16, 1);
         END
-        ELSE
-        BEGIN
-            UPDATE tp with (ROWLOCK)
-            SET LastUpdated = SYSDATETIME()
-            FROM TreatmentPlans tp
-            INNER JOIN inserted i ON tp.TreatmentPlanID = i.TreatmentPlanID;
-        END
+
+        -- Update LastUpdated to now
+        UPDATE tp WITH (ROWLOCK)
+        SET LastUpdated = SYSDATETIME()
+        FROM TreatmentPlans tp
+        JOIN inserted i ON tp.TreatmentPlanID = i.TreatmentPlanID;
+
     END TRY
     BEGIN CATCH
         INSERT INTO AuditLog (TableName, Operation, RecordID, AuditMessage)
-        VALUES ('TreatmentPlans', 'E', '3', 'Concurrency error: ' + ERROR_MESSAGE());
+        SELECT 'TreatmentPlans', 'E', i.TreatmentPlanID, ERROR_MESSAGE()
+        FROM inserted i;
         THROW;
     END CATCH
 END;

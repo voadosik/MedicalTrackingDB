@@ -16,10 +16,6 @@ SELECT * FROM vPatientSymptomSummary;
 -- Shows standard symptoms associated with each disease
 SELECT * FROM vDiseaseSymptomRelationships;
 
--- View: Treatment Effectiveness
--- Displays treatment success rates for completed cases
-SELECT * FROM vTreatmentEffectiveness;
-
 -- View: Symptom Prevalence
 -- Shows how common each symptom is across patients
 SELECT * FROM vSymptomPrevalence;
@@ -46,7 +42,7 @@ SELECT * FROM Patients WHERE PatientID = @NewPatientID;
 -- Test: Update Patient Information
 EXEC UpdatePatient 
     @PatientID = @NewPatientID,
-    @PhoneNumber = '111-TEST-123';
+    @PhoneNumber = '111TEST123';
 SELECT * FROM Patients WHERE PatientID = @NewPatientID;
 
 -- Test: Add Patient Symptom
@@ -80,16 +76,23 @@ EXEC PrescribeTreatment
     @TreatmentID = @TreatmentID,
     @DoctorID = @DoctorID,
     @Status = 'Active',
-    @Dosage = '10',
+    @Dosage = '1',
     @Frequency = 'Once a day',
     @TreatmentPlanID = @TreatmentPlanID OUTPUT;
     
 SELECT * FROM TreatmentPlans WHERE TreatmentPlanID = @TreatmentPlanID;
 
 -- Test: Update Treatment Plan
+DECLARE @OriginalRowVersion ROWVERSION;
+SELECT @OriginalRowVersion = RowVersion
+FROM TreatmentPlans
+WHERE TreatmentPlanID = @TreatmentPlanID;
+
 EXEC UpdateTreatmentPlan 
     @TreatmentPlanID = @TreatmentPlanID,
-    @Status = 'Completed';
+    @Status = 'Completed',
+    @OriginalRowVersion = @OriginalRowVersion;
+
 SELECT * FROM TreatmentPlans WHERE TreatmentPlanID = @TreatmentPlanID;
 
 -- Test: Confirm Diagnosis
