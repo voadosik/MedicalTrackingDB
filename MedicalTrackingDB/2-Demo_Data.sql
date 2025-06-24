@@ -3,11 +3,11 @@ GO
 
 INSERT INTO Patients (FirstName, LastName, DOB, Gender, PhoneNumber, Email)
 VALUES 
-('John', 'Doe', '1990-10-11', 'M', '+420608264888', 'john124243@gmail.com'),
-('Lily', 'Smith', '1985-10-12', 'F', '+420608233111', 'smith124@gmail.com'),
-('James', 'Brown', '1975-10-10', 'M', '+420608264000', 'james.brown@gmail.com'),
-('Kamala', 'Harris', '1980-11-11', 'F', '+420608274088', 'kamala1111@gmail.com'),
-('Robert', 'Kubica', '1995-12-21', 'M', '+420608233377', 'kubica@yahoo.com');
+('John', 'Doe', '11-10-1990', 'M', '+420608264888', 'john124243@gmail.com'),
+('Lily', 'Smith', '12-10-1985', 'F', '+420608233111', 'smith124@gmail.com'),
+('James', 'Brown', '10-10-1975', 'M', '+420608264000', 'james.brown@gmail.com'),
+('Kamala', 'Harris', '11-11-1980', 'F', '+420608274088', 'kamala1111@gmail.com'),
+('Robert', 'Kubica', '07-12-1984', 'M', '+420608233377', 'kubica@yahoo.com');
 
 INSERT INTO Symptoms (SymptomName, Description, BodySystem)
 VALUES 
